@@ -22,7 +22,7 @@ public class GuestImpl implements GuestService {
     public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
                    Set<Guest> guestsForADay = new HashSet<>();
                         for (Guest guest : guests) {
-                            if(guest.checkIn().isAfter(date) && guest.checkOut().isBefore(date) ){
+                            if(guest.checkIn().isAfter(date) && guest.checkOut().isBefore(date)) {
                                 guestsForADay.add(guest);
                             }
                         }
