@@ -20,14 +20,12 @@ public class GuestImpl implements GuestService {
 
     @Override
     public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
-                   Set<Guest> guestsToday = new HashSet<>();
-
+                   Set<Guest> guestsForADay = new HashSet<>();
                         for (Guest guest : guests) {
                             if(guest.checkIn().isAfter(date) && guest.checkOut().isBefore(date) ){
-                                guestsToday.add(guest);
+                                guestsForADay.add(guest);
                             }
-
                         }
-        return guestsToday;
+        return guestsForADay;
     }
 }
