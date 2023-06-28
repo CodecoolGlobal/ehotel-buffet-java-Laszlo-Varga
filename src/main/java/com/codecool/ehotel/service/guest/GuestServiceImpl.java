@@ -4,9 +4,7 @@ import com.codecool.ehotel.model.Guest;
 import com.codecool.ehotel.model.GuestType;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GuestServiceImpl implements GuestService {
@@ -58,5 +56,33 @@ public class GuestServiceImpl implements GuestService {
         }
         return guestsToday;
     }
+
+    public List<List<Guest>> splitGuestsIntoBreakfastCycles(List<Guest> guests) {
+        int cyclesPerDay = 8;
+        int guestsPerCycle = guests.size() / cyclesPerDay;
+        int remainingGuests = guests.size() % cyclesPerDay;
+
+        List<List<Guest>> breakfastCycles = new ArrayList<>();
+
+        // Randomly shuffle the guests
+        Collections.shuffle(guests);
+
+        int currentIndex = 0;
+        for (int cycle = 0; cycle < cyclesPerDay; cycle++) {
+            int guestsInCurrentCycle = guestsPerCycle + (remainingGuests > 0 ? 1 : 0);
+            remainingGuests--;
+
+            List<Guest> currentCycleGuests = new ArrayList<>();
+            for (int i = 0; i < guestsInCurrentCycle; i++) {
+                currentCycleGuests.add(guests.get(currentIndex));
+                currentIndex++;
+            }
+
+            breakfastCycles.add(currentCycleGuests);
+        }
+
+        return breakfastCycles;
+    }
+
 
 }
