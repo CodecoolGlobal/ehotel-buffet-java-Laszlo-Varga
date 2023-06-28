@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface BuffetService {
 
-    void refillBuffet(Map<MealType, Integer> portionsPerType, LocalDateTime timestamp);
+    void refillBuffet(Buffet buffet, Map<MealType, Integer> portionsPerType, LocalDateTime timestamp);
 
     boolean consumeFreshest(MealType mealType);
 
