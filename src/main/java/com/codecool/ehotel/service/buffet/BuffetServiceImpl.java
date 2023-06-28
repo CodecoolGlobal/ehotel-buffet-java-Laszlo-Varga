@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class BuffetServiceImpl implements BuffetService {
-    private Buffet buffet = new Buffet();
+    public Buffet buffet = new Buffet();
     @Override
-    public void refillBuffet(Buffet buffet, Map<MealType, Integer> portionsPerType, LocalDateTime timeStamp) {
+    public void refillBuffet(Map<MealType, Integer> portionsPerType, LocalDateTime timeStamp) {
         for (Map.Entry<MealType, Integer> entry : portionsPerType.entrySet()) {
             MealType mealType = entry.getKey();
             int portionAmount = entry.getValue();
