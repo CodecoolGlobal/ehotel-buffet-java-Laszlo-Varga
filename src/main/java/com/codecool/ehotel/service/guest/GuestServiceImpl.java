@@ -45,6 +45,8 @@ public class GuestServiceImpl implements GuestService {
         return new LocalDate[]{checkInDate, checkOutDate};
     }
 
+
+
     @Override
     public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
         Set<Guest> guestsToday = new HashSet<>();
@@ -59,30 +61,30 @@ public class GuestServiceImpl implements GuestService {
 
     public List<List<Guest>> splitGuestsIntoBreakfastCycles(List<Guest> guests) {
         int cyclesPerDay = 8;
-        int guestsPerCycle = guests.size() / cyclesPerDay;
-        int remainingGuests = guests.size() % cyclesPerDay;
-
         List<List<Guest>> breakfastCycles = new ArrayList<>();
 
-        // Randomly shuffle the guests
+        for (int i = 0; i < cyclesPerDay; i++) {
+            breakfastCycles.add(new ArrayList<>());
+        }
         Collections.shuffle(guests);
-
         int currentIndex = 0;
-        for (int cycle = 0; cycle < cyclesPerDay; cycle++) {
-            int guestsInCurrentCycle = guestsPerCycle + (remainingGuests > 0 ? 1 : 0);
-            remainingGuests--;
+        for (Guest guest : guests) {
+            breakfastCycles.get(currentIndex).add(guest);
+            currentIndex = (currentIndex + 1) % cyclesPerDay;
 
-            List<Guest> currentCycleGuests = new ArrayList<>();
-            for (int i = 0; i < guestsInCurrentCycle; i++) {
-                currentCycleGuests.add(guests.get(currentIndex));
-                currentIndex++;
-            }
-
-            breakfastCycles.add(currentCycleGuests);
         }
 
+        for (int i = 0; i < cyclesPerDay; i++) {
+            System.out.println("Cycle " + (i+1) + ": " + breakfastCycles.get(i));
+        }
+
+
         return breakfastCycles;
+
+
     }
+
+
 
 
 }

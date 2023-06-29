@@ -53,4 +53,20 @@ public class BuffetServiceImpl implements BuffetService {
         return sumCost;
     }
 
+    @Override
+    public Map<MealType, Integer> createPortionsPerTypeMap() {
+        Map<MealType, Integer> portionsPerType = new HashMap<>();
+
+        Random random = new Random();
+        int minPortionAmount = 10;
+        int maxPortionAmount = 50;
+
+        for (MealType mealType : MealType.values()) {
+            int portionAmount = random.nextInt(maxPortionAmount - minPortionAmount + 1) + minPortionAmount;
+            portionsPerType.put(mealType, portionAmount);
+        }
+
+        return portionsPerType;
+    }
+
 }

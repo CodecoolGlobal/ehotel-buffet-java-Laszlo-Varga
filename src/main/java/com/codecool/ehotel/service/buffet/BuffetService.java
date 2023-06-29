@@ -16,4 +16,6 @@ public interface BuffetService {
 
 
     double collectWaste(Buffet buffet, MealDurability durability, LocalDateTime timeStamp);
+
+    Map<MealType, Integer> createPortionsPerTypeMap();
 }
