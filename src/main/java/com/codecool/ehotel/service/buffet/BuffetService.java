@@ -12,8 +12,8 @@ public interface BuffetService {
 
     void refillBuffet(Buffet buffet, Map<MealType, Integer> portionsPerType, LocalDateTime timestamp);
 
-    boolean consumeFreshest(MealType mealType);
+    boolean consumeFreshest(Buffet buffet, MealType mealType);
 
 
-    double collectWaste(MealDurability durability, LocalDateTime timeStamp);
+    double collectWaste(Buffet buffet, MealDurability durability, LocalDateTime timeStamp);
 }

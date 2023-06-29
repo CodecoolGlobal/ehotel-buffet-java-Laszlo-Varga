@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class BuffetServiceImpl implements BuffetService {
-    private Buffet buffet = new Buffet();
+
     @Override
     public void refillBuffet(Buffet buffet, Map<MealType, Integer> portionsPerType, LocalDateTime timeStamp) {
         for (Map.Entry<MealType, Integer> entry : portionsPerType.entrySet()) {
@@ -23,13 +23,8 @@ public class BuffetServiceImpl implements BuffetService {
     }
 
     @Override
-    public boolean consumeFreshest(MealType mealType) {
-        List<Food> matchingMeals = new ArrayList<>();
-        for (Food food : buffet.getFoods()) {
-            if (food.mealType().equals(mealType)) {
-                matchingMeals.add(food);
-            }
-        }
+    public boolean consumeFreshest(Buffet buffet, MealType mealType) {
+        List<Food> matchingMeals = buffet.getFoodByMealType(mealType);
 
         if (matchingMeals.isEmpty()) {
             return false;
@@ -43,19 +38,16 @@ public class BuffetServiceImpl implements BuffetService {
     }
 
     @Override
-    public double collectWaste(MealDurability durability, LocalDateTime timeStamp) {
+    public double collectWaste(Buffet buffet, MealDurability durability, LocalDateTime timeStamp) {
         double sumCost = 0;
 
-        List<Food> discardedMeals = new ArrayList<>();
-        for (Food food : buffet.getFoods()) {
-            if (food.mealType().getDurability() == durability && food.timeStamp().isAfter(timeStamp)) {
-                discardedMeals.add(food);
+        List<Food> mealsByDurability = buffet.getFoodByDurability(durability);
+
+        for (Food food : mealsByDurability) {
+            if (food.timeStamp().isAfter(timeStamp)) {
+                buffet.remove(food);
                 sumCost += food.mealType().getCost();
             }
-        }
-
-        for (Food discardedMeal : discardedMeals) {
-            buffet.remove(discardedMeal);
         }
 
         return sumCost;
