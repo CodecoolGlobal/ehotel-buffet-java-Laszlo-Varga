@@ -5,15 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Buffet {
-    private static List<Food> foods;
+    private List<Food> foods;
 
     public Buffet() {
         foods = new ArrayList<>();
     }
 
-    public List<Food> getFoods() {
-        return Collections.unmodifiableList(foods);
-    }
 
     public void addFood(Food food) {
         if(food != null) {
@@ -25,5 +22,26 @@ public class Buffet {
         if (food != null) {
         foods.remove(food);
         }
+    }
+
+    public List<Food> getFoodByMealType(MealType mealType) {
+        List<Food> matchingMeals = new ArrayList<>();
+        for (Food food : foods) {
+            if (food.mealType().equals(mealType)) {
+                matchingMeals.add(food);
+            }
+        }
+        return matchingMeals;
+    }
+
+    public List<Food> getFoodByDurability(MealDurability durability){
+        List<Food> matchingMealsByDurability = new ArrayList<>();
+
+        for (Food food : foods) {
+            if (food.mealType().getDurability() == durability) {
+                matchingMealsByDurability.add(food);
+            }
+        }
+        return matchingMealsByDurability;
     }
 }
